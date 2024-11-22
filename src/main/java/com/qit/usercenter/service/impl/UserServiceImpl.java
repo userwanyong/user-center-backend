@@ -130,7 +130,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //TODO 添加检验逻辑
         //如果密码为空，默认为123456
         if (StringUtils.isBlank(userAddAndUpdatedDTO.getPassword())){
-            userAddAndUpdatedDTO.setPassword("123456");
+            String newPassword = DigestUtils.md5DigestAsHex((SALT+userAddAndUpdatedDTO.getPassword()).getBytes());
+            userAddAndUpdatedDTO.setPassword(newPassword);
         }
         User user = new User();
         BeanUtils.copyProperties(userAddAndUpdatedDTO,user);
