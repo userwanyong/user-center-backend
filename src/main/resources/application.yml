@@ -10,9 +10,4 @@ spring:
     url: jdbc:mysql://localhost:3306/user_center #jdbc:mysql://localhost:3306/+自己的数据库架构名称
     username: root #统一
     password: 252748377 #自己数据库密码
-#mybatis-plus:
-#  global-config:
-#    db-config:
-#      logic-delete-field: isDelete #全局逻辑删除的实体字段名
-#      logic-delete-value: 1 #逻辑已删除值
-#      logic-not-delete-value: 0 #逻辑未删除值
+

@@ -15,8 +15,9 @@ import java.util.List;
  * @author 永
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user")//localhost:8080/user
 @Slf4j
+@CrossOrigin(origins = {"http://localhost:3011"},allowCredentials = "true")
 public class UserController {
 
     @Resource
@@ -27,11 +28,16 @@ public class UserController {
      * @param userRegisterDTO
      * @return
      */
-    @PostMapping("/register")
+    @PostMapping("/register")//localhost:8080/user/register
     public BaseResponse<Boolean> register(@RequestBody UserRegisterDTO userRegisterDTO){
-        userService.register(userRegisterDTO);
-        log.info("注册成功");
-        return new BaseResponse<>(200,"注册成功");
+        try{
+            userService.register(userRegisterDTO);
+            log.info("注册成功");
+            return new BaseResponse<>(200,"注册成功");
+        }catch (Exception e){
+            log.error("注册失败");
+            return new BaseResponse<>(400,e.getMessage());
+        }
     }
 
     /**
@@ -40,10 +46,15 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public BaseResponse<UserVo> login(@RequestBody UserLoginDTO userLoginDTO, HttpServletRequest request){
-        UserVo userVo = userService.login(userLoginDTO,request);
-        log.info("登录成功");
-        return new BaseResponse<>(200,"登录成功",userVo);
+    public BaseResponse<UserVo> login(@RequestBody UserLoginDTO userLoginDTO, HttpServletRequest request){//接收 HttpServletRequest 对象，以便访问与当前HTTP请求相关的各种信息
+        try{
+            UserVo userVo = userService.login(userLoginDTO,request);
+            log.info("登录成功");
+            return new BaseResponse<>(200,"登录成功",userVo);
+        }catch (Exception e){
+            log.error("登录失败");
+            return new BaseResponse<>(400,e.getMessage());
+        }
     }
 
     /**
@@ -87,7 +98,7 @@ public class UserController {
             return new BaseResponse<>(401,"权限不足");
         }
         ArrayList<UserVo> resultList = new ArrayList<>();
-
+        //执行查询
         List<UserVo> list = userService.query2(userQueryDTO);
         resultList.addAll(list);
 

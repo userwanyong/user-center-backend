@@ -98,7 +98,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userVo.setPassword(userLoginDTO.getPassword());
         //脱敏
         extracted(userVo);
-        //记录用户登录态
+        //记录用户登录态，用于将用户信息存储到当前会话（HttpSession）中
         request.getSession().setAttribute("user",userVo);//键 值
         return userVo;
     }
@@ -108,7 +108,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * ctrl+alt+m提取方法
      */
     @Override
-    public void extracted(UserVo userVo) {
+    public void extracted(UserVo userVo) {//123456 ->12**56
         int length = userVo.getPassword().length();
         int numAsterisks = length - 4; // 保留前两位和后两位，中间部分用 * 替换
         StringBuilder maskedPassword = new StringBuilder(); //创建一个 StringBuilder 对象 maskedPassword，用于构建最终的格式化密码
@@ -149,6 +149,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public List<UserVo> query2(UserQueryDTO userQueryDTO) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+
         queryWrapper.like(StringUtils.isNotBlank(userQueryDTO.getUsername()),"username",userQueryDTO.getUsername());
         queryWrapper.like(StringUtils.isNotBlank(userQueryDTO.getNickname()),"nickname",userQueryDTO.getNickname());
         queryWrapper.like(StringUtils.isNotBlank(userQueryDTO.getPhone()),"phone",userQueryDTO.getPhone());
