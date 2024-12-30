@@ -38,6 +38,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 
     /**
      * 设置静态资源映射
+     *
      * http://localhost:8080/api/doc.html
      */
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
