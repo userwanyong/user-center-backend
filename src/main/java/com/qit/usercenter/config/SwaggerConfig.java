@@ -19,7 +19,6 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     /**
      * 通过knife4j生成接口文档
      * http://localhost:8080/api/v2/api-docs
-     * @return
      */
     @Bean
     public Docket docket() {
